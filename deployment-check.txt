@@ -1,0 +1,4 @@
+WEBOMONKS_DEPLOY_CHECK_20261017
+Website source: paulteam8168-png/webomonks
+Production branch: main
+Expected site: 12-page animated WEBOMONKS digital marketing website.
