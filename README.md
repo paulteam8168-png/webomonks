@@ -33,7 +33,7 @@ The 12 pages link to `assets/wafer-theme.css` and `assets/wafer-theme.js`, with 
 The Cloudflare Worker named `webomonks-live` serves listed paths from this GitHub branch, with a bundled fallback snapshot. Apex and www DNS routes were connected to this Worker. When new routes are added or the fallback snapshot must be refreshed, redeploy the Worker and update its path registry.
 
 ## Contact form
-The contact page currently **prepares an email draft** and can copy project details. It does **not** submit to a server; no verified WEBOMONKS receiving email address was supplied. Configure a business inbox or a reliable form backend before advertising automatic enquiry collection.
+WEBOMONKS contact channels are configured for **Webomonks0@gmail.com** and **WhatsApp +91 7088855556**. Sidebar, closing CTAs and Contact page provide direct `mailto:` and `wa.me` links. The contact form validates user input and prepares a pre-addressed email draft or a prefilled WhatsApp message; the visitor must press Send in their app. A copy-details fallback is also provided. The website does **not** submit or store form messages on its own backend.
 
 ## Google verification
 `google76ba3c9b1e8c30ef.html` is kept at the site root, alongside `robots.txt` and `sitemap.xml`.

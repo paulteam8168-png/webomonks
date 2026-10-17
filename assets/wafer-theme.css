@@ -161,3 +161,22 @@ html,body{background:#000}
 .brand-mark svg[viewBox="0 0 48 24"]{width:100%;height:100%}
 .panel .search-pill svg{width:14px;height:14px}
 .wm-faq summary:focus-visible,.model-summary:focus-visible{outline:2px solid #e0c0ff;outline-offset:4px}
+
+/* WEBOMONKS customer contact channels: live mailto + WhatsApp */
+.wm-contact-methods{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:14px 0 22px}
+.wm-contact-method{display:flex;align-items:center;gap:12px;min-width:0;min-height:70px;padding:13px;background:#ffffff0b;border:1px solid #ffffff35;border-radius:13px;color:white;text-decoration:none;transition:background .2s,border-color .2s,transform .2s}
+.wm-contact-method:hover{background:#ffffff17;border-color:#b993fc80;transform:translateY(-2px)}
+.wm-contact-icon{display:flex;align-items:center;justify-content:center;flex:none;width:32px;height:32px;border-radius:9px;background:#07081185}
+.wm-contact-icon svg{width:22px;height:22px}
+.wm-contact-method>span:nth-child(2){display:grid;gap:6px;min-width:0}
+.wm-contact-method strong{font-weight:600;font-size:12px}
+.wm-contact-method>span:nth-child(2)>span{font-size:11.5px;color:#e7e1f0cd;overflow-wrap:anywhere}
+.wm-method-arrow{margin-left:auto;color:#c5aaf5}
+.wm-wa-form-btn{display:inline-flex;align-items:center;gap:8px;background:#25D366!important;color:#082d18!important}
+.wm-wa-form-btn svg{width:18px;height:18px}
+.wm-wa-form-btn:hover{box-shadow:0 8px 22px #25d3663b}
+.wm-closing-whatsapp{display:inline-flex!important;align-items:center;gap:7px;margin-left:8px;background:#25D366!important;color:#07371a!important}
+.wm-closing-whatsapp svg{width:17px;height:17px}
+.side .wm-wa-nav svg{width:18px;height:18px}
+.side .wm-mail-nav svg{width:18px;height:18px}
+@media(max-width:540px){.wm-contact-methods{grid-template-columns:1fr}.wm-closing-whatsapp{margin-left:0;margin-top:9px}}
