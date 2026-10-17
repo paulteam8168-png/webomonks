@@ -249,3 +249,116 @@ html,body{background:#000}
 @media(max-width:440px){
   .app .hero h1{font-size:clamp(23px,6.35vw,26px)}
 }
+
+
+/* WEBOMONKS luminous aurora front animation v1: soft cyan/lilac motion,
+   separate decorative layers to preserve the original sky and page overlay. */
+.panel > .wm-light-field{
+  position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden;
+  opacity:.94;mix-blend-mode:screen;contain:paint;
+}
+.wm-light-drift{
+  display:block;position:absolute;aspect-ratio:1;border-radius:50%;
+  width:min(65vw,530px);filter:blur(50px);will-change:transform;
+}
+.wm-light-drift-cyan{
+  top:-180px;right:-110px;
+  background:radial-gradient(circle,rgba(105,220,255,.27) 0%,rgba(86,166,255,.15) 33%,rgba(61,125,255,.035) 61%,transparent 72%);
+  animation:wmAuroraWander 18s ease-in-out infinite alternate;
+}
+.wm-light-drift-lilac{
+  left:-220px;top:20%;width:min(75vw,640px);
+  background:radial-gradient(circle,rgba(190,142,255,.22) 0%,rgba(136,98,246,.095) 38%,transparent 72%);
+  animation:wmAuroraWander 23s ease-in-out infinite alternate-reverse;
+}
+.wm-light-drift-rose{
+  right:-180px;bottom:0;width:min(68vw,560px);
+  background:radial-gradient(circle,rgba(244,173,255,.15) 0%,rgba(100,204,255,.09) 41%,transparent 75%);
+  animation:wmAuroraWander 26s ease-in-out infinite alternate;
+}
+.wm-light-halo{
+  display:block;position:absolute;width:340px;height:340px;
+  right:-125px;top:9%;border-radius:50%;
+  background:conic-gradient(from 90deg,transparent 0deg,rgba(133,232,255,.10) 85deg,transparent 175deg,rgba(191,150,255,.12) 275deg,transparent 360deg);
+  filter:blur(24px);opacity:.6;will-change:transform;
+  animation:wmHaloOrbit 32s linear infinite;
+}
+@keyframes wmAuroraWander{
+  0%{transform:translate3d(-5%,2%,0) scale(.93)}
+  45%{transform:translate3d(8%,9%,0) scale(1.1)}
+  100%{transform:translate3d(-2%,-8%,0) scale(1.03)}
+}
+@keyframes wmHaloOrbit{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+/* Soft spinning 3D orb — bright center with two independent moving rings. */
+.hero .wm-luminous-orbit{
+  display:block;position:absolute;width:128px;height:128px;
+  top:-40px;right:-17px;margin:0;
+  opacity:1;pointer-events:auto;isolation:isolate;
+  filter:drop-shadow(0 0 20px rgba(141,217,255,.38));
+  animation:wmOrbHover 6.5s ease-in-out infinite alternate;
+}
+.hero .wm-luminous-orbit:before{
+  content:"";position:absolute;inset:13%;border-radius:50%;z-index:0;
+  background:
+    radial-gradient(circle at 31% 26%,rgba(246,255,255,.96) 0%,rgba(173,243,255,.87) 9%,rgba(133,195,255,.68) 25%,rgba(170,146,249,.37) 45%,rgba(75,82,167,.22) 64%,rgba(23,38,80,.15) 74%,transparent 78%),
+    radial-gradient(circle at 73% 72%,rgba(179,132,255,.5),transparent 56%);
+  box-shadow:0 0 18px rgba(150,210,255,.3),0 0 47px rgba(165,137,255,.24),inset 0 -8px 14px rgba(75,52,153,.36);
+  animation:wmOrbBreathe 7s ease-in-out infinite alternate;
+}
+.hero .wm-luminous-orbit:after{
+  content:"";position:absolute;inset:12%;z-index:1;
+  border-radius:50%;border:1px solid rgba(197,244,255,.74);
+  box-shadow:0 0 13px rgba(122,227,255,.45),inset 0 0 10px rgba(172,142,255,.22);
+  animation:wmOrbRingA 16s linear infinite;
+}
+.hero .wm-luminous-orbit .wm-orb-sheen{
+  position:absolute;z-index:1;inset:20%;border-radius:50%;
+  background:radial-gradient(ellipse at 33% 30%,rgba(255,255,255,.7),transparent 30%),
+    linear-gradient(120deg,transparent 30%,rgba(187,243,255,.15) 42%,transparent 66%);
+  mix-blend-mode:screen;transform:rotate(-15deg);
+}
+.hero .wm-luminous-orbit .wm-orbit-trail{
+  position:absolute;inset:1%;z-index:3;border-radius:50%;
+  border:2px solid transparent;pointer-events:none;
+}
+.hero .wm-luminous-orbit .wm-orbit-trail-one{
+  border-top-color:rgba(183,243,255,.95);border-left-color:rgba(160,213,255,.44);
+  box-shadow:0 -3px 13px rgba(92,222,255,.24);
+  animation:wmOrbRingB 19s linear infinite;
+}
+.hero .wm-luminous-orbit .wm-orbit-trail-two{
+  inset:-7%;border-width:1px;
+  border-bottom-color:rgba(203,169,255,.83);border-right-color:rgba(187,225,255,.38);
+  animation:wmOrbRingC 23s linear infinite reverse;
+}
+.hero .wm-luminous-orbit canvas{
+  position:absolute;inset:0;z-index:2;width:100%;height:100%;display:block;
+  opacity:.94;filter:drop-shadow(0 0 4px rgba(193,233,255,.35));
+}
+@keyframes wmOrbHover{from{transform:translateY(-4px)}to{transform:translateY(9px)}}
+@keyframes wmOrbBreathe{from{transform:scale(.93);opacity:.82}to{transform:scale(1.09);opacity:1}}
+@keyframes wmOrbRingA{from{transform:rotate(0deg) scaleY(.65)}to{transform:rotate(360deg) scaleY(.65)}}
+@keyframes wmOrbRingB{from{transform:rotate(30deg) scaleY(.68)}to{transform:rotate(390deg) scaleY(.68)}}
+@keyframes wmOrbRingC{from{transform:rotate(-25deg) scaleY(.86)}to{transform:rotate(335deg) scaleY(.86)}}
+@media(max-width:760px){
+  .panel > .wm-light-field{opacity:.8}
+  .wm-light-drift{width:350px;filter:blur(46px)}
+  .wm-light-drift-cyan{top:-160px;right:-150px}
+  .wm-light-drift-lilac{top:20%;left:-185px;width:400px}
+  .wm-light-drift-rose{right:-180px;bottom:15%;width:380px}
+  .wm-light-halo{width:260px;height:260px;right:-120px;top:0}
+  .hero .wm-luminous-orbit{
+    display:block!important;position:relative!important;
+    top:auto!important;right:auto!important;left:auto!important;
+    width:136px;height:136px;margin:0 auto 23px;
+  }
+  .hero .wm-luminous-orbit .wm-orbit-trail{border-width:1.5px}
+}
+@media(max-width:420px){
+  .hero .wm-luminous-orbit{width:124px;height:124px;margin-bottom:19px}
+}
+@media(prefers-reduced-motion:reduce){
+  .wm-light-drift,.wm-light-halo,.hero .wm-luminous-orbit,
+  .hero .wm-luminous-orbit:before,.hero .wm-luminous-orbit:after,
+  .hero .wm-luminous-orbit .wm-orbit-trail{animation:none!important;will-change:auto!important}
+}
