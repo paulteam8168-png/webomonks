@@ -1,36 +1,44 @@
-# WEBOMONKS — 12-page animated digital marketing website
+# WEBOMONKS — Cinematic Digital Growth Studio
 
-Production-oriented static HTML pages, CSS and JavaScript. No build step or package installation.
+The live production website is served at **https://webomonks.com/** using a Cloudflare Worker called `webomonks-live`. The GitHub source repository is `paulteam8168-png/webomonks`, branch `main`.
 
-## 12 pages
-1. [Home](index.html)
-2. [About](about.html)
-3. [Services](services.html)
-4. [Meta Ads](meta-ads.html)
-5. [Google Ads](google-ads.html)
-6. [SEO Services](seo.html)
-7. [Digital Marketing](digital-marketing.html)
-8. [Social Media](social-media.html)
-9. [Landing Pages](landing-pages.html)
-10. [Strategy & Analytics](strategy.html)
-11. [Insights](insights.html)
-12. [Contact](contact.html)
+## Design — cinematic dashboard theme
+The October 2026 update adapts the user-provided Wafer-style visual reference for the WEBOMONKS digital marketing agency. The agency site is **not an AI API service or an OAuth login**.
 
-## Design / functionality
-- Animated 3D projected particle globe on every page; mouse and touch drag
-- Responsive navigation with expandable service dropdown
-- Reveal-on-scroll effects, subtle tilt cards, light trails and a motion-aware layout
-- Expandable FAQs, useful SEO and marketing content, filtering on Services and Insights pages
-- Fully linked navigation, query-parameter-driven service choice in Contact
-- Shared style and script files: `assets/site.css` and `assets/site.js`
-- Existing local orb illustration: `assets/webomonks-orb.webp`
-- Basic SEO metadata and sitemap
+- Castle-video welcome intro on the homepage, with two useful Google Ads / Instagram service shortcuts and an "Enter the Studio" control
+- Dashboard with collapsible 200px black sidebar, responsive 42px compact rail and sky-loop video
+- Real-time (when accessible) ASCII texture sampled from the active video
+- Glowing rainbow playbook, expandable service detail cards, subtle 3D particle header globe
+- Exact relevant brand SVGs displayed inline: multicolor Google G, Instagram gradient camera, Facebook, Meta infinity-style mark and other service symbols
+- 12 static pages with unique service content and internal links
+- Native search popover (press /), keyboard accessibility, reduced-motion support and mobile-friendly presentation
 
-## Important: Contact form delivery
-The form currently opens an email draft with **no recipient** (because a verified WEBOMONKS business email has not been supplied) or copies the enquiry details. To receive actual enquiries, set the business inbox in `assets/site.js` (variable `receiver`) or integrate a trusted form backend. Do not claim the form sends data until a real endpoint is configured and tested.
+## 12 routes
+- `index.html`
+- `about.html`
+- `services.html`
+- `meta-ads.html`
+- `google-ads.html`
+- `seo.html`
+- `digital-marketing.html`
+- `social-media.html`
+- `landing-pages.html`
+- `strategy.html`
+- `insights.html`
+- `contact.html`
 
-## Deployment
-For GitHub Pages: Settings → Pages → Deploy from branch → `main` → `/(root)`. If webomonks.com is deployed through another hosting provider, confirm that it is connected to this GitHub repository and `main` branch before assuming changes will appear at the custom domain.
+## Technology
+The 12 pages link to `assets/wafer-theme.css` and `assets/wafer-theme.js`, with no framework or build step. The reference's castle and sky video URLs are hot-linked. There are no third-party login buttons or fake client results. The local orb illustration remains in `assets/webomonks-orb.webp` as a fallback background.
 
-## Performance
-3D animation uses Canvas 2D with 3D projection, uses fewer particles on touch devices and pauses when the page is hidden or the scene leaves the viewport. Accessibility reduced-motion preference is respected. No external 3D library is required.
+The Cloudflare Worker named `webomonks-live` serves listed paths from this GitHub branch, with a bundled fallback snapshot. Apex and www DNS routes were connected to this Worker. When new routes are added or the fallback snapshot must be refreshed, redeploy the Worker and update its path registry.
+
+## Contact form
+The contact page currently **prepares an email draft** and can copy project details. It does **not** submit to a server; no verified WEBOMONKS receiving email address was supplied. Configure a business inbox or a reliable form backend before advertising automatic enquiry collection.
+
+## Google verification
+`google76ba3c9b1e8c30ef.html` is kept at the site root, alongside `robots.txt` and `sitemap.xml`.
+
+## Domain
+- Production: https://webomonks.com/
+- Worker preview: https://webomonks-live.sharma-chirag93.workers.dev/
+- GitHub: https://github.com/paulteam8168-png/webomonks
