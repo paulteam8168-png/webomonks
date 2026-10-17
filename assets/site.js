@@ -34,3 +34,31 @@ arr.sort((a,b)=>a[2]-b[2]);for(const [x,y,z,p] of arr){const alpha=Math.max(.13,
 ctx.strokeStyle='rgba('+rgb+',.13)';ctx.lineWidth=.8;ctx.beginPath();ctx.ellipse(w/2,h/2,radius*1.33,radius*.33,-.37,0,Math.PI*2);ctx.stroke();frame=requestAnimationFrame(draw)}
 frame=requestAnimationFrame(draw);
 })();
+
+
+// WEBOMONKS — restore original cinematic welcome and left-rail agency dashboard.
+(()=>{'use strict';
+const links=[
+ ['index.html','⌂','Overview'],['about.html','◈','About'],['services.html','◇','All Services'],
+ ['meta-ads.html','◎','Meta Ads'],['google-ads.html','G','Google Ads'],['seo.html','✳','SEO'],
+ ['digital-marketing.html','✦','Digital Marketing'],['social-media.html','◉','Social Media'],
+ ['landing-pages.html','▣','Landing Pages'],['strategy.html','⌘','Strategy'],
+ ['insights.html','✧','Insights'],['contact.html','✉','Contact']
+];
+const current=location.pathname.split('/').pop()||'index.html';
+const rail=document.createElement('aside');rail.className='wm-studio-rail';rail.setAttribute('aria-label','WEBOMONKS studio navigation');
+rail.innerHTML='<a class="wm-rail-logo" href="index.html">webo<em>monks.</em></a><div class="wm-rail-head">The Studio</div><nav class="wm-rail-nav" aria-label="Studio pages">'+links.map(([url,icon,title])=>'<a class="wm-rail-link" href="'+url+'"'+(url===current?' aria-current="page"':'')+'><span aria-hidden="true">'+icon+'</span><span>'+title+'</span></a>').join('')+'</nav><div class="wm-rail-footer"><a href="contact.html">Start a Project ↗</a><p>CREATIVE × PERFORMANCE × GROWTH</p></div>';
+document.body.insertBefore(rail,document.body.firstChild);
+if(current!=='index.html')return;
+const intro=document.createElement('div');intro.id='wmIntro';intro.className='wm-intro';intro.setAttribute('role','dialog');intro.setAttribute('aria-modal','true');intro.setAttribute('aria-labelledby','wmIntroTitle');
+intro.innerHTML='<div class="wm-intro-stage"><div class="wm-intro-panel"><div class="wm-intro-logo" aria-hidden="true">✳</div><div class="wm-intro-kicker">The creative growth studio</div><h2 id="wmIntroTitle">Welcome to <span>WEBOMONKS.</span></h2><p>We make digital growth feel different. Explore Meta Ads, Google Ads, SEO and thoughtful creative marketing—all in one futuristic studio.</p><div class="wm-intro-actions"><button type="button" id="wmIntroEnter" class="btn btn-light">Enter the Studio ↗</button><a class="btn" href="contact.html">Plan My Growth ↗</a></div><div class="wm-intro-caption">STRATEGY × CREATIVITY × PERFORMANCE</div></div><span class="wm-intro-hint">A NEW WORLD OF DIGITAL GROWTH ✦</span></div><div class="wm-intro-foot">WEBOMONKS · DIGITAL EXPERIENCES · PERFORMANCE MARKETING</div>';
+document.body.appendChild(intro);document.body.classList.add('wm-intro-active');
+let closing=false;
+const enter=()=>{if(closing)return;closing=true;intro.classList.add('leaving');document.body.classList.remove('wm-intro-active');setTimeout(()=>{intro.remove();const h=document.querySelector('main h1');if(h){h.setAttribute('tabindex','-1');h.focus({preventScroll:true})}},680)};
+intro.querySelector('#wmIntroEnter').addEventListener('click',enter);
+intro.addEventListener('keydown',e=>{if(e.key==='Escape')enter()});
+if(!matchMedia('(prefers-reduced-motion:reduce)').matches&&!matchMedia('(pointer:coarse)').matches){
+ intro.querySelector('.wm-intro-stage').addEventListener('pointermove',e=>{const x=(e.clientX/innerWidth-.5)*24,y=(e.clientY/innerHeight-.5)*16;intro.style.setProperty('--wm-x',x.toFixed(1)+'px');intro.style.setProperty('--wm-y',y.toFixed(1)+'px')});
+}
+requestAnimationFrame(()=>{intro.classList.add('ready');intro.querySelector('#wmIntroEnter').focus({preventScroll:true})});
+})();
