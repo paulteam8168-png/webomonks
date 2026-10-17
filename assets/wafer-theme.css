@@ -150,3 +150,14 @@ html,body{background:#000}
 @media(max-width:440px){.hero h2{font-size:25px}.contact-grid{grid-template-columns:1fr}.contact-grid .wide{grid-column:auto}.model-summary{padding:15px 12px 14px}.tags{gap:6px 8px}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.stat:last-child{text-align:left}.hero .channel-strip{margin-top:14px}}
 @media(prefers-reduced-motion:reduce){.hero-orbit{animation:none}.model-card,.channel-pill{transition:none}}
 
+
+/* Final logo sizing so multi-channel badges stay readable */
+.model-name .badge:has(.brand-cluster){width:51px;flex:none;overflow:visible;padding:0 2px}
+.model-name .badge .brand-cluster{gap:2px}
+.model-name .badge .brand-cluster .brand-mark{width:21px;height:21px;margin:0}
+.side .side-icon .brand-cluster .brand-mark:nth-child(2){display:none}
+.side .side-icon .brand-cluster{gap:0}
+.brand-mark:has(svg[viewBox="0 0 48 24"]){width:27px}
+.brand-mark svg[viewBox="0 0 48 24"]{width:100%;height:100%}
+.panel .search-pill svg{width:14px;height:14px}
+.wm-faq summary:focus-visible,.model-summary:focus-visible{outline:2px solid #e0c0ff;outline-offset:4px}
