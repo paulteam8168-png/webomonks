@@ -5,8 +5,12 @@ A cinematic, mobile-responsive digital marketing agency website inspired by the 
 ## Live entry point
 The deployed website loads from **`index.html`**, a standalone HTML document containing all required CSS and JavaScript. The legacy `styles.css`, `app.js` and `config.js` files remain in the repository for historical reference but are not used by the new homepage.
 
+## Hero background
+- `assets/webomonks-orb.webp` — optimized image generated for WEBOMONKS and committed to the repository.
+- Used behind the intro screen and dashboard with slow background motion; this is a still artwork with CSS animation, not a rendered video.
+
 ## Features
-- Cinematic video splash screen and animated ASCII textures
+- Cinematic WEBOMONKS splash screen with the generated purple-blue cosmic orb artwork and gentle CSS background motion
 - Enter-the-studio transition to an interactive agency dashboard
 - Pointer-reactive rotating 3D particle sphere
 - Expandable service details for Meta Ads, Google Ads, SEO, and Digital Marketing
@@ -21,5 +25,5 @@ Repository **Settings → Pages → Build and deployment → Deploy from a branc
 
 Expected URL: https://paulteam8168-png.github.io/webomonks/
 
-The videos, poster images and Google Fonts are hosted externally and require internet access. Animations have fallbacks for reduced motion.
+The generated hero background is stored locally in `assets/webomonks-orb.webp` and loads from this repository. Google Fonts require internet access; system font fallbacks are available. Background movement and the interactive 3D particle sphere respect reduced-motion preferences.
 
