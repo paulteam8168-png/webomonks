@@ -1,0 +1,50 @@
+(function studioApp(){
+"use strict";
+const $=(s,r=document)=>r.querySelector(s);
+const $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
+const app=$("#app"),auth=$("#auth"),panel=$("#panel"),scroller=$("#scroll"),castle=$("#castleVideo"),sky=$("#skyVideo");
+const mobile=matchMedia("(max-width:760px)"),reduced=matchMedia("(prefers-reduced-motion:reduce)");
+const motion=!reduced.matches,lowPower=mobile.matches||!!navigator.connection?.saveData;
+if(mobile.matches)app.classList.add("mini");
+const visited=(()=>{try{return sessionStorage.getItem("webomonks-entered")==="1"}catch(e){return false}})();
+let entered=!auth||visited;
+if(auth&&visited){auth.remove();app.classList.add("on");app.setAttribute("aria-hidden","false")}
+function safePlay(v){if(v&&!document.hidden)v.play().catch(()=>{})}
+function safePause(v){if(v)v.pause()}
+function ascii(canvas,video,mode){const ctx=canvas.getContext('2d');const off=document.createElement('canvas'),ox=off.getContext('2d',{willReadFrequently:true});let active=false,last=0,frame=0,cols=0,rows=0,cw=8,ch=11,w=0,h=0,broken=false;const remeasure=()=>{const box=canvas.getBoundingClientRect();w=box.width;h=box.height;cw=w<640?7:8;ch=w<640?10:11;cols=Math.ceil(w/cw);rows=Math.ceil(h/ch);const d=Math.min(window.devicePixelRatio||1,1.5);canvas.width=Math.round(w*d);canvas.height=Math.round(h*d);ctx.setTransform(d,0,0,d,0,0);off.width=cols;off.height=rows};const observer=new ResizeObserver(remeasure);observer.observe(canvas);remeasure();const fract=x=>x-Math.floor(x);function draw(time){if(!active||broken)return;frame=requestAnimationFrame(draw);if(time-last<110)return;last=time;if(video.readyState<2||!w||!h)return;const vw=video.videoWidth,vh=video.videoHeight;if(!vw||!vh)return;const scale=Math.max(w/vw,h/vh),cropW=w/scale,cropH=h/scale,sx=(vw-cropW)/2,sy=(vh-cropH)/2;let pix;try{ox.clearRect(0,0,cols,rows);ox.drawImage(video,sx,sy,cropW,cropH,0,0,cols,rows);pix=ox.getImageData(0,0,cols,rows).data}catch(e){canvas.style.display='none';broken=true;stop();return}ctx.clearRect(0,0,w,h);ctx.font=`500 ${ch-1}px "Geist Mono",monospace`;ctx.textBaseline='top';ctx.textAlign='center';for(let y=0;y<rows;y++){for(let x=0;x<cols;x++){const n=(y*cols+x)*4,r=pix[n],g=pix[n+1],b=pix[n+2],L=(.299*r+.587*g+.114*b)/255,warm=r-b,k=fract(Math.sin(x*127.1+y*311.7)*43758.545),px=(x+.5)*cw,py=y*ch;if(mode==='sky'){if(warm<14||L<.56)continue;ctx.fillStyle=L>.8?'rgba(255,255,255,.34)':'rgba(92,112,104,.30)';ctx.fillText(k>.7?'+':k>.35?':':'.',px,py);continue}if(L<.27){ctx.fillStyle='rgba(8,16,30,.52)';ctx.fillRect(x*cw,py,cw,ch);ctx.fillStyle='rgba(205,224,236,.5)';ctx.fillText(':;1s5$:.'.charAt((Math.floor(k*8+L*20))&7),px,py)}else if(warm>20&&L<.70){ctx.fillStyle=`rgba(255,255,255,${.24+(.70-L)*.55})`;ctx.fillText('@0G8@6C0'.charAt((Math.floor(k*3+L*14))&7),px,py)}else if(L>.60){if(k<.18)continue;ctx.fillStyle='rgba(255,255,255,.46)';ctx.fillText('.',px,py-2)}else if(k>.45){ctx.fillStyle='rgba(255,255,255,.26)';ctx.fillText(L<.4?':':'.',px,py-1)}}}}
+function start(){if(active||broken)return;active=true;frame=requestAnimationFrame(draw)}function stop(){active=false;cancelAnimationFrame(frame)}return{start,stop}}
+
+let castleASCII=null,skyASCII=null;
+function startCastle(){if(!auth||!castle)return;safePlay(castle);if(!motion||lowPower)return;if(!castleASCII)castleASCII=ascii($("#castleAscii"),castle,"castle");castleASCII.start()}
+function startSky(){if(!sky)return;safePlay(sky);if(!motion||lowPower)return;if(!skyASCII)skyASCII=ascii($("#skyAscii"),sky,"sky");skyASCII.start()}
+function enterStudio(){if(!auth||auth.classList.contains("leaving"))return;try{sessionStorage.setItem("webomonks-entered","1")}catch(e){}auth.classList.add("leaving");app.classList.add("on");app.setAttribute("aria-hidden","false");entered=true;startSky();castleASCII?.stop();safePause(castle);setTimeout(()=>auth.remove(),630)}
+if(auth&&!visited){let ready=false;const reveal=()=>{if(!ready){ready=true;auth.classList.add("ready")}};Promise.race([document.fonts?.ready||Promise.resolve(),new Promise(r=>setTimeout(r,1800))]).then(()=>setTimeout(reveal,motion?600:10));setTimeout(reveal,2500);startCastle();$("#enterStudio")?.addEventListener("click",enterStudio)}else startSky();
+document.addEventListener("visibilitychange",()=>{if(document.hidden){safePause(castle);safePause(sky);castleASCII?.stop();skyASCII?.stop()}else if(auth?.isConnected&&!auth.classList.contains("leaving"))startCastle();else startSky()});
+$("#collapse")?.addEventListener("click",()=>app.classList.add("mini"));$("#expand")?.addEventListener("click",()=>app.classList.remove("mini"));
+panel?.addEventListener("click",e=>{if(mobile.matches&&!app.classList.contains("mini")&&!e.target.closest(".search-pill")&&!e.target.closest(".studio-search"))app.classList.add("mini")});
+const allLinks=$$(".side .nav-link");
+const menu=$("#studioSearch"),menuBtn=$("#search"),query=$("#studioSearchInput"),results=$("#studioSearchResults");
+const searchItems=allLinks.map(x=>({url:x.getAttribute("href"),title:x.textContent.trim(),icon:x.querySelector(".side-icon")?.innerHTML||""})).filter(x=>x.title);
+function drawSearch(q=""){if(!results)return;const needle=q.trim().toLowerCase(),items=searchItems.filter(x=>!needle||x.title.toLowerCase().includes(needle));results.innerHTML=items.length?items.map(x=>'<a href="'+x.url+'"><span class="brand-mark">'+x.icon+'</span> '+x.title+'</a>').join(""):"<small>No matching pages. Try Meta Ads, Google Ads or SEO.</small>"}
+const showSearch=()=>{menu.hidden=false;drawSearch(query.value);query.focus()};const hideSearch=()=>{menu.hidden=true;menuBtn.focus()};
+menuBtn?.addEventListener("click",()=>menu.hidden?showSearch():hideSearch());query?.addEventListener("input",()=>drawSearch(query.value));
+document.addEventListener("keydown",e=>{const target=document.activeElement,tag=target?.tagName?.toLowerCase(),typing=["input","textarea","select"].includes(tag)||target?.isContentEditable;if(e.key==="/"&&!typing&&!auth?.isConnected){e.preventDefault();showSearch()}if(e.key==="Escape"&&!menu.hidden){e.preventDefault();hideSearch()}if(e.key==="Enter"&&target===query){e.preventDefault();const first=results.querySelector("a");if(first)location.assign(first.href)}});
+document.addEventListener("pointerdown",e=>{if(menu&&!menu.hidden&&!menu.contains(e.target)&&!menuBtn.contains(e.target))menu.hidden=true});
+$$(".model-card > .model-summary").forEach(btn=>btn.addEventListener("click",()=>{const card=btn.closest(".model-card"),now=!card.classList.contains("open");card.classList.toggle("open",now);btn.setAttribute("aria-expanded",String(now))}));
+$("#insightsFilter")?.addEventListener("input",e=>{const needle=e.target.value.trim().toLowerCase();$$(".insight-card").forEach(x=>x.hidden=!x.textContent.toLowerCase().includes(needle))});
+const form=$("#contactForm");
+if(form){const service=$("#contactService"),status=$("#formStatus"),q=new URLSearchParams(location.search);if(service&&q.has("service")){const name=q.get("service");if(Array.from(service.options).some(o=>o.value===name))service.value=name}
+const summary=()=>{const d=new FormData(form);return "Name: "+d.get("name")+"\nEmail: "+d.get("email")+"\nService: "+d.get("service")+"\n\nProject details:\n"+d.get("message")};
+form.addEventListener("submit",e=>{e.preventDefault();if(!form.reportValidity())return;const d=new FormData(form);status.textContent="Email draft opening. Add WEBOMONKS business email as recipient, then press Send.";location.href="mailto:?subject="+encodeURIComponent("WEBOMONKS enquiry — "+d.get("service"))+"&body="+encodeURIComponent(summary())});
+$("#copyEnquiry")?.addEventListener("click",async()=>{if(!form.reportValidity())return;try{await navigator.clipboard.writeText(summary());status.textContent="Project details copied. Send them to the WEBOMONKS business contact."}catch(e){status.textContent="Clipboard unavailable. Please use Prepare Email Enquiry."}})}
+const canvas=$("#scene3d"),ctx=canvas?.getContext("2d");
+if(canvas&&ctx&&motion){const N=mobile.matches?180:430,pts=[];for(let i=0;i<N;i++){const y=1-2*(i+.5)/N,r=Math.sqrt(Math.max(0,1-y*y)),theta=i*Math.PI*(3-Math.sqrt(5));pts.push([Math.cos(theta)*r,y,Math.sin(theta)*r])}
+let w=0,h=0,spin=0,offset=0,drag=false,px=0,visible=true;
+const size=()=>{const rect=canvas.getBoundingClientRect(),d=Math.min(devicePixelRatio||1,2);w=rect.width;h=rect.height;canvas.width=Math.max(1,Math.round(w*d));canvas.height=Math.max(1,Math.round(h*d));ctx.setTransform(d,0,0,d,0,0)};
+new ResizeObserver(size).observe(canvas);size();canvas.addEventListener("pointerdown",e=>{drag=true;px=e.clientX;canvas.setPointerCapture(e.pointerId)});
+canvas.addEventListener("pointermove",e=>{if(drag){offset+=(e.clientX-px)*.01;px=e.clientX}});
+canvas.addEventListener("pointerup",()=>drag=false);canvas.addEventListener("pointercancel",()=>drag=false);
+new IntersectionObserver(entries=>{visible=entries[0]?.isIntersecting||false}).observe(canvas);
+function animate(){requestAnimationFrame(animate);if(!visible||document.hidden||!app.classList.contains("on")||!w||!h)return;spin+=.007;ctx.clearRect(0,0,w,h);const r=Math.min(w,h)*.4,co=Math.cos(spin+offset),si=Math.sin(spin+offset),cp=Math.cos(.3),sp=Math.sin(.3),positions=[];for(const [x,y,z] of pts){const xx=x*co-z*si,zz=x*si+z*co,yy=y*cp-zz*sp,z2=y*sp+zz*cp,p=2.6/(3-z2);positions.push([w/2+xx*r*p,h/2+yy*r*p,z2,p])}positions.sort((a,b)=>a[2]-b[2]);for(const [x,y,z,p] of positions){ctx.fillStyle="rgba(224,181,255,"+Math.max(.18,Math.min(.96,(z+1.45)/2.35))+")";ctx.beginPath();ctx.arc(x,y,Math.max(.42,1.18*p),0,Math.PI*2);ctx.fill()}}
+animate()}
+})();
