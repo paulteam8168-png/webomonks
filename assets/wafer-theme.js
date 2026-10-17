@@ -22,7 +22,8 @@ if(auth&&!visited){let ready=false;const reveal=()=>{if(!ready){ready=true;auth.
 document.addEventListener("visibilitychange",()=>{if(document.hidden){safePause(castle);safePause(sky);castleASCII?.stop();skyASCII?.stop()}else if(auth?.isConnected&&!auth.classList.contains("leaving"))startCastle();else startSky()});
 $("#collapse")?.addEventListener("click",()=>app.classList.add("mini"));$("#expand")?.addEventListener("click",()=>app.classList.remove("mini"));
 panel?.addEventListener("click",e=>{if(mobile.matches&&!app.classList.contains("mini")&&!e.target.closest(".search-pill")&&!e.target.closest(".studio-search"))app.classList.add("mini")});
-const allLinks=$$(".side .nav-link");
+const allLinks=$(".side .nav-link");
+allLinks.forEach(link=>{const label=link.querySelector(".side-label")?.textContent?.trim();if(label)link.setAttribute("aria-label",label)});
 const menu=$("#studioSearch"),menuBtn=$("#search"),query=$("#studioSearchInput"),results=$("#studioSearchResults");
 const searchItems=allLinks.map(x=>({url:x.getAttribute("href"),title:x.textContent.trim(),icon:x.querySelector(".side-icon")?.innerHTML||""})).filter(x=>x.title);
 function drawSearch(q=""){if(!results)return;const needle=q.trim().toLowerCase(),items=searchItems.filter(x=>!needle||x.title.toLowerCase().includes(needle));results.innerHTML=items.length?items.map(x=>'<a href="'+x.url+'"><span class="brand-mark">'+x.icon+'</span> '+x.title+'</a>').join(""):"<small>No matching pages. Try Meta Ads, Google Ads or SEO.</small>"}

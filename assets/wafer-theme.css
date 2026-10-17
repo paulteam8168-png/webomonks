@@ -202,3 +202,50 @@ html,body{background:#000}
 @media(max-width:760px){.wm-floating-wa{right:12px;bottom:calc(12px + env(safe-area-inset-bottom));height:46px;padding:8px 12px}.wm-floating-wa span{display:none}.wm-floating-wa svg{width:25px;height:25px}.studio-footnote nav{gap:12px}.hero h1{font-size:28px;line-height:32px}}
 @media(max-width:440px){.hero h1{font-size:25px;line-height:29px}}
 @media(prefers-reduced-motion:reduce){.stage>video,.panel>video,.stage>.ascii,.panel>.ascii{display:none!important}.wm-floating-wa,.studio-footnote a{transition:none!important}.hero h1{animation:none}}
+
+
+/* iPhone/mobile navigation rail repair — collapsed labels must never bleed into content.
+   Keep accessible names in JS so icon-only links remain screen-reader friendly. */
+.app.mini .side{overflow-x:hidden!important}
+.app.mini .side .nav-link{
+  width:42px!important;max-width:42px!important;padding:0!important;
+  overflow:hidden!important;white-space:nowrap!important;
+}
+.app.mini .side .nav-link .side-label,
+.app.mini .side .nav-link .side-meta,
+.app.mini .side .side-label,
+.app.mini .side .side-meta{
+  opacity:0!important;visibility:hidden!important;display:none!important;
+  pointer-events:none!important;
+}
+.app.mini .side .wordmark,
+.app.mini .side .collapse{
+  opacity:0!important;visibility:hidden!important;pointer-events:none!important;
+}
+.app.mini .side .mini-open{
+  opacity:1!important;visibility:visible!important;pointer-events:auto!important;
+}
+.app.mini .side .nav-link .side-icon{
+  position:absolute!important;left:12px!important;top:12px!important;
+  width:18px!important;height:18px!important;
+}
+.app:not(.mini) .side .nav-link .side-label{
+  opacity:1;visibility:visible;display:inline;
+}
+@media(max-width:760px){
+  .app .side{overflow-x:hidden!important}
+  .app:not(.mini) .side{width:200px!important;min-width:200px!important}
+  .app:not(.mini) .side .nav-link{width:200px!important}
+  .app.mini .side{width:42px!important;min-width:42px!important}
+  .app.mini .side .side-top{width:42px!important}
+  .app .hero h1{
+    font-size:clamp(24px,6.5vw,28px);
+    line-height:1.18;
+    letter-spacing:-.035em;
+    overflow-wrap:break-word;
+    text-wrap:balance;
+  }
+}
+@media(max-width:440px){
+  .app .hero h1{font-size:clamp(23px,6.35vw,26px)}
+}
