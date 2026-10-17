@@ -1,29 +1,36 @@
-# WEBOMONKS — Digital Growth Studio
+# WEBOMONKS — 12-page animated digital marketing website
 
-A cinematic, mobile-responsive digital marketing agency website inspired by the supplied Wafer interface, customized for WEBOMONKS.
+Production-oriented static HTML pages, CSS and JavaScript. No build step or package installation.
 
-## Live entry point
-The deployed website loads from **`index.html`**, a standalone HTML document containing all required CSS and JavaScript. The legacy `styles.css`, `app.js` and `config.js` files remain in the repository for historical reference but are not used by the new homepage.
+## 12 pages
+1. [Home](index.html)
+2. [About](about.html)
+3. [Services](services.html)
+4. [Meta Ads](meta-ads.html)
+5. [Google Ads](google-ads.html)
+6. [SEO Services](seo.html)
+7. [Digital Marketing](digital-marketing.html)
+8. [Social Media](social-media.html)
+9. [Landing Pages](landing-pages.html)
+10. [Strategy & Analytics](strategy.html)
+11. [Insights](insights.html)
+12. [Contact](contact.html)
 
-## Hero background
-- `assets/webomonks-orb.webp` — optimized image generated for WEBOMONKS and committed to the repository.
-- Used behind the intro screen and dashboard with slow background motion; this is a still artwork with CSS animation, not a rendered video.
+## Design / functionality
+- Animated 3D projected particle globe on every page; mouse and touch drag
+- Responsive navigation with expandable service dropdown
+- Reveal-on-scroll effects, subtle tilt cards, light trails and a motion-aware layout
+- Expandable FAQs, useful SEO and marketing content, filtering on Services and Insights pages
+- Fully linked navigation, query-parameter-driven service choice in Contact
+- Shared style and script files: `assets/site.css` and `assets/site.js`
+- Existing local orb illustration: `assets/webomonks-orb.webp`
+- Basic SEO metadata and sitemap
 
-## Features
-- Cinematic WEBOMONKS splash screen with the generated purple-blue cosmic orb artwork and gentle CSS background motion
-- Enter-the-studio transition to an interactive agency dashboard
-- Pointer-reactive rotating 3D particle sphere
-- Expandable service details for Meta Ads, Google Ads, SEO, and Digital Marketing
-- Sidebar navigation, responsive mobile layout, and service search
-- Enquiry form that prepares an email in the visitor's email application
+## Important: Contact form delivery
+The form currently opens an email draft with **no recipient** (because a verified WEBOMONKS business email has not been supplied) or copies the enquiry details. To receive actual enquiries, set the business inbox in `assets/site.js` (variable `receiver`) or integrate a trusted form backend. Do not claim the form sends data until a real endpoint is configured and tested.
 
-## Contact setup required
-The site **does not send enquiries to WEBOMONKS yet**: a verified business email address has not been provided. Set `configuredEmail` in the inline JavaScript in `index.html` to an address that you own, or integrate a server-side form endpoint. Visitors must still confirm the email in their email application. Do not use sample addresses until ownership is verified.
+## Deployment
+For GitHub Pages: Settings → Pages → Deploy from branch → `main` → `/(root)`. If webomonks.com is deployed through another hosting provider, confirm that it is connected to this GitHub repository and `main` branch before assuming changes will appear at the custom domain.
 
-## Deploy with GitHub Pages
-Repository **Settings → Pages → Build and deployment → Deploy from a branch**. Select **main** and **/(root)**, then Save.
-
-Expected URL: https://paulteam8168-png.github.io/webomonks/
-
-The generated hero background is stored locally in `assets/webomonks-orb.webp` and loads from this repository. Google Fonts require internet access; system font fallbacks are available. Background movement and the interactive 3D particle sphere respect reduced-motion preferences.
-
+## Performance
+3D animation uses Canvas 2D with 3D projection, uses fewer particles on touch devices and pauses when the page is hidden or the scene leaves the viewport. Accessibility reduced-motion preference is respected. No external 3D library is required.
