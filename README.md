@@ -42,3 +42,6 @@ WEBOMONKS contact channels are configured for **Webomonks0@gmail.com** and **Wha
 - Production: https://webomonks.com/
 - Worker preview: https://webomonks-live.sharma-chirag93.workers.dev/
 - GitHub: https://github.com/paulteam8168-png/webomonks
+
+## October 17 site audit
+Semantically correct H1 per page, custom SVG favicon, structured data, accessible skip links and main landmark, lower background video preload, reduced-motion handling, 30fps 3D animation, WhatsApp contact shortcut, contextual service enquiry topics, privacy notice and branded 404 page. The Worker is deployed separately from GitHub and needs redeploying after code changes.
